@@ -6,11 +6,22 @@ from app.restore_names import restore_names
     "users, expected",
     [
         (
-            [{"first_name": None, "last_name": "Holy", "full_name": "Jack Holy"}],
+            [
+                {
+                    "first_name": None,
+                    "last_name": "Holy",
+                    "full_name": "Jack Holy",
+                }
+            ],
             "Jack",
         ),
         (
-            [{"last_name": "Adams", "full_name": "Mike Adams"}],
+            [
+                {
+                    "last_name": "Adams",
+                    "full_name": "Mike Adams",
+                }
+            ],
             "Mike",
         ),
         (
@@ -34,9 +45,20 @@ def test_restore_names(
 
 def test_multiple_users() -> None:
     users = [
-        {"first_name": None, "last_name": "Holy", "full_name": "Jack Holy"},
-        {"last_name": "Adams", "full_name": "Mike Adams"},
-        {"first_name": "Anna", "last_name": "Smith", "full_name": "Anna Smith"},
+        {
+            "first_name": None,
+            "last_name": "Holy",
+            "full_name": "Jack Holy",
+        },
+        {
+            "last_name": "Adams",
+            "full_name": "Mike Adams",
+        },
+        {
+            "first_name": "Anna",
+            "last_name": "Smith",
+            "full_name": "Anna Smith",
+        },
     ]
 
     restore_names(users)
@@ -47,7 +69,13 @@ def test_multiple_users() -> None:
 
 
 def test_returns_none() -> None:
-    users = [{"first_name": None, "last_name": "Holy", "full_name": "Jack Holy"}]
+    users = [
+        {
+            "first_name": None,
+            "last_name": "Holy",
+            "full_name": "Jack Holy",
+        }
+    ]
 
     result = restore_names(users)
 
