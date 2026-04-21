@@ -2,63 +2,36 @@ import pytest
 from app.restore_names import restore_names
 
 
-def test_restore_when_first_name_none() -> None:
-    users = [
-        {
-            "first_name": None,
-            "last_name": "Holy",
-            "full_name": "Jack Holy",
-        }
-    ]
-
+@pytest.mark.parametrize(
+    "users, expected",
+    [
+        # first_name = None
+        (
+            [{"first_name": None, "last_name": "Holy", "full_name": "Jack Holy"}],
+            "Jack",
+        ),
+        # first_name відсутній
+        (
+            [{"last_name": "Adams", "full_name": "Mike Adams"}],
+            "Mike",
+        ),
+        # first_name вже є → не змінюється
+        (
+            [{"first_name": "John", "last_name": "Doe", "full_name": "Mike Doe"}],
+            "John",
+        ),
+    ],
+)
+def test_restore_names(users, expected) -> None:
     restore_names(users)
-
-    assert users[0]["first_name"] == "Jack"
-
-
-def test_restore_when_first_name_missing() -> None:
-    users = [
-        {
-            "last_name": "Adams",
-            "full_name": "Mike Adams",
-        }
-    ]
-
-    restore_names(users)
-
-    assert users[0]["first_name"] == "Mike"
-
-
-def test_do_not_override_existing_first_name() -> None:
-    users = [
-        {
-            "first_name": "John",
-            "last_name": "Doe",
-            "full_name": "Mike Doe",
-        }
-    ]
-
-    restore_names(users)
-
-    assert users[0]["first_name"] == "John"
+    assert users[0]["first_name"] == expected
 
 
 def test_multiple_users() -> None:
     users = [
-        {
-            "first_name": None,
-            "last_name": "Holy",
-            "full_name": "Jack Holy",
-        },
-        {
-            "last_name": "Adams",
-            "full_name": "Mike Adams",
-        },
-        {
-            "first_name": "Anna",
-            "last_name": "Smith",
-            "full_name": "Anna Smith",
-        },
+        {"first_name": None, "last_name": "Holy", "full_name": "Jack Holy"},
+        {"last_name": "Adams", "full_name": "Mike Adams"},
+        {"first_name": "Anna", "last_name": "Smith", "full_name": "Anna Smith"},
     ]
 
     restore_names(users)
@@ -68,14 +41,8 @@ def test_multiple_users() -> None:
     assert users[2]["first_name"] == "Anna"
 
 
-def test_function_returns_none() -> None:
-    users = [
-        {
-            "first_name": None,
-            "last_name": "Holy",
-            "full_name": "Jack Holy",
-        }
-    ]
+def test_returns_none() -> None:
+    users = [{"first_name": None, "last_name": "Holy", "full_name": "Jack Holy"}]
 
     result = restore_names(users)
 
